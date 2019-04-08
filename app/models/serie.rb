@@ -1,4 +1,5 @@
 class Serie < ApplicationRecord
+  enum status: [:coming_soon, :preorder, :billboard]
 end
 
 # == Schema Information
