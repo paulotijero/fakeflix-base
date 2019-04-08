@@ -10,6 +10,7 @@ end
 #  description :text
 #  price       :integer
 #  rating      :integer
+#  status      :integer
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
