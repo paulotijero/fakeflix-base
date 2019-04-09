@@ -6,7 +6,7 @@ RSpec.describe Api::MoviesController, type: :controller do
     @movie = Movie.create(
       title: "El titulo",
       description: "La descripcion",
-      rating: 2,
+      rating: -1,
       duration: 5,
       price: 100,
       playback: 0,
@@ -83,7 +83,7 @@ RSpec.describe Api::MoviesController, type: :controller do
       patch :rating, params: {
         id: @movie.id,
         attributes: {
-          rating: 5
+          rating: 1
         }
       }
       expect(response).to have_http_status(:ok)
@@ -92,11 +92,11 @@ RSpec.describe Api::MoviesController, type: :controller do
       patch :rating, params: {
         id: @movie.id,
         attributes: {
-          rating: 5
+          rating: 1
         }
       }
       expected_playback = JSON.parse(response.body)
-      expect(expected_playback["rating"]).to eq(5)
+      expect(expected_playback["rating"]).to eq(1)
     end
   end
 
