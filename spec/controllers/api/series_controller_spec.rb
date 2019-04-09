@@ -9,6 +9,11 @@ RSpec.describe Api::SeriesController, type: :controller do
       rating: 2,
       price: 100
     )
+    @rental_serie = Rental.create(
+      paid_price: 10,
+      rentable_type: "Serie",
+      rentable_id: @serie.id
+    )
   end
 
   describe 'GET index' do
@@ -32,6 +37,11 @@ RSpec.describe Api::SeriesController, type: :controller do
       get :show, params: { id: @serie }
       expected_serie = JSON.parse(response.body)
       expect(expected_serie["id"]).to eq(@serie.id)
+    end
+    it 'render the correct serie rented' do
+      get :show, params: { id: @serie }
+      expected_serie = JSON.parse(response.body)
+      expect(expected_serie["rented"]).to eq(@serie.rented)
     end
     it 'returns http status not found' do
       get :show, params: { id: 'xxx' }

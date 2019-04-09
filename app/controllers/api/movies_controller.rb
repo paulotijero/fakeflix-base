@@ -4,15 +4,15 @@ module Api
     def index
       case
       when params[:status]
-        # Mejorar logica para listar solo los rentados.
-        render json: Movie.where(status: params["status"])
+        render json: Movie.where(status: params["status"]).as_json(methods: [:rented])
       else
-        render json: Movie.all
+        movie = Movie.all.as_json(methods: [:rented])
+        render json: movie
       end
     end
 
     def show
-      render json: Movie.find(params[:id])
+      render json: Movie.find(params[:id]).as_json(methods: [:rented])
     end
 
     def playback

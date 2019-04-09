@@ -12,6 +12,11 @@ RSpec.describe Api::MoviesController, type: :controller do
       playback: 0,
       status: "coming_soon"
     )
+    @rental_movie = Rental.create(
+      paid_price: 10,
+      rentable_type: "Movie",
+      rentable_id: @movie.id
+    )
   end
 
   describe 'GET index' do
@@ -49,6 +54,11 @@ RSpec.describe Api::MoviesController, type: :controller do
       get :show, params: { id: @movie }
       expected_movie = JSON.parse(response.body)
       expect(expected_movie["id"]).to eq(@movie.id)
+    end
+    it 'render the correct movie rented' do
+      get :show, params: { id: @movie }
+      expected_movie = JSON.parse(response.body)
+      expect(expected_movie["rented"]).to eq(@movie.rented)
     end
     it 'returns http status not found' do
       get :show, params: { id: 'xxx' }
