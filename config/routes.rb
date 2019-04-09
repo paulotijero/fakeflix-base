@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     resources :episodes, only: [:show] do
       get "playback", on: :member
     end
-    resources :rents, only: [:index]
-    post '/rents/movie/:id', to: 'rentals#create'
-    post '/rents/serie/:id', to: 'rentals#create'
+    resources :rentals, only: [:index] do
+      post '/movies/:id' => :movies, on: :collection
+      post '/series/:id' => :series, on: :collection
+    end
   end
 end
