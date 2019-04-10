@@ -2,11 +2,17 @@ module Api
   class Api::SeriesController < ApplicationController
     
     def index
-      render json: Serie.all.as_json(methods: [:rented])
+      render json: Serie.all.as_json(
+        methods: [:rented, :total_duration],
+        include: {episodes: {only: [:id, :title]}}
+      )
     end
 
     def show
-      render json: Serie.find(params[:id]).as_json(methods: [:rented])
+      render json: Serie.find(params[:id]).as_json(
+        methods: [:rented, :total_duration],
+        include: {episodes: {only: [:id, :title]}}
+      )
     end
 
     def rating

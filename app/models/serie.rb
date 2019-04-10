@@ -7,6 +7,10 @@ class Serie < ApplicationRecord
     rentals.any?
   end
 
+  def total_duration
+    episodes.sum(:duration)
+  end
+
 end
 
 

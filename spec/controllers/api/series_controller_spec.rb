@@ -9,6 +9,20 @@ RSpec.describe Api::SeriesController, type: :controller do
       rating: 2,
       price: 100
     )
+    @episode1 = Episode.create(
+      title: "El titulo",
+      description: "La descripcion",
+      duration: 5,
+      serie_id: @serie.id,
+      playback: 0
+    )
+    @episode2 = Episode.create(
+      title: "El titulo",
+      description: "La descripcion",
+      duration: 5,
+      serie_id: @serie.id,
+      playback: 0
+    )
     @rental_serie = Rental.create(
       paid_price: 10,
       rentable_type: "Serie",
@@ -42,6 +56,17 @@ RSpec.describe Api::SeriesController, type: :controller do
       get :show, params: { id: @serie }
       expected_serie = JSON.parse(response.body)
       expect(expected_serie["rented"]).to eq(@serie.rented)
+    end
+    it 'render the correct serie duration' do
+      get :show, params: { id: @serie }
+      expected_serie = JSON.parse(response.body)
+      expect(expected_serie["total_duration"]).to eq(10)
+    end
+    it 'render the correct serie duration' do
+      get :show, params: { id: @serie }
+      expected_serie = JSON.parse(response.body)
+      expect(expected_serie["episodes"][0]["id"]).to eq(@episode1.id)
+      expect(expected_serie["episodes"][1]["id"]).to eq(@episode2.id)
     end
     it 'returns http status not found' do
       get :show, params: { id: 'xxx' }
