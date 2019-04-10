@@ -28,6 +28,11 @@ RSpec.describe Api::EpisodesController, type: :controller do
       expected_episode = JSON.parse(response.body)
       expect(expected_episode["id"]).to eq(@episode.id)
     end
+    it 'render the correct serie id for episode' do
+      get :show, params: { id: @episode }
+      expected_episode = JSON.parse(response.body)
+      expect(expected_episode["serie_id"]).to eq(@episode.serie_id)
+    end
     it 'returns http status not found' do
       get :show, params: { id: 'xxx' }
       expect(response).to have_http_status(:not_found)
